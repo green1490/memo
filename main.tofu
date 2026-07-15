@@ -5,6 +5,10 @@ terraform {
       version = "7.37.0"
     }
   }
+
+  backend "gcs" {
+    bucket = "openstate-prod"
+  }
 }
 
 provider "google" {
