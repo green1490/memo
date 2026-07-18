@@ -7,8 +7,10 @@ resource "google_compute_instance" "vm" {
     }
   }
 
+  metadata_startup_script = file("startup.sh")
+
   network_interface {
     network = "default"
-    access_config {}   
+    access_config {}
   }
 }
