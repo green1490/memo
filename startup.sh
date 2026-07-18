@@ -8,7 +8,7 @@ logger "Finished installation"
 
 if [ $? -eq 0 ]; then
     logger "Pulling image"
-    podman run --name memos -p 5230:8080 docker.io/neosmemo/memos:0.29
+    podman run --name memos -p 8080:5230 docker.io/neosmemo/memos:0.29
     logger "Pulled image"
 
     if [ $? -eq 0 ]; then
