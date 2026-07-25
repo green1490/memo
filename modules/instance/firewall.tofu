@@ -8,6 +8,7 @@ resource "google_compute_firewall" "vm-firewall" {
     ports = ["8080"]
   }
 
+  // to use gcp's ssh
   allow {
     protocol = "tcp"
     ports = ["22"]
