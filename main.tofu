@@ -16,10 +16,3 @@ provider "google" {
   region = "europe-west6"
   zone = "europe-west6-a"
 }
-
-module "memos-instance" {
-  source = "./modules/instance"
-  disk-name = "memos-disk"
-  instance-name = "memos"
-  startup-script-path = "${path.root}/startup.sh"
-}

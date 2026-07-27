@@ -10,11 +10,14 @@ resource "google_compute_instance" "vm" {
   metadata_startup_script = file(var.startup-script-path)
 
   network_interface {
-    network = google_compute_network.vm-network.name
+    network = var.network-name
     access_config {}
   }
 
-  attached_disk {
-    source = google_compute_disk.vm-disk.name
+  dynamic "attached_disk" {
+    for_each = google_compute_disk.vm-disk != null ? [0] : []
+    content {
+      source = google_compute_disk.vm-disk.name
+    }
   }
 }

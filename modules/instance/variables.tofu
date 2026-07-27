@@ -10,7 +10,6 @@ variable "disk-size" {
 
 variable "disk-name" {
   type = string
-  default = null
   nullable = true
 }
 
