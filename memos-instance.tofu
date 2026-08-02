@@ -4,6 +4,4 @@ module "memos-instance" {
   instance-name = "memos"
   network-name = google_compute_network.vm-network.name
   startup-script-path = "${path.root}/scripts/memos-startup.sh"
-
-  depends_on = [ google_compute_network.vm-network ]
 }
