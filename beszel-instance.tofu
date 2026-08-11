@@ -4,4 +4,6 @@ module "beszel-instance" {
   disk-name = null
   network-name = google_compute_network.vm-network.name
   startup-script-path = "${path.root}/scripts/beszel-instance.sh"
+  ssh-name = var.ssh-name
+  ssh-pub-key = var.ssh-pub-key
 }

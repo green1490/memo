@@ -1,4 +1,12 @@
+variable "ssh-name" {
+  type = string
+}
+
+variable "ssh-pub-key" {
+  type = string
+}
+
 variable "network-name" {
   type = string
-  default = "vm-network"
+  default = "network-name"
 }

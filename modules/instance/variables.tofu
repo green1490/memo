@@ -25,3 +25,13 @@ variable "network-name" {
   type = string
   default = "vm-network"
 }
+
+variable "ssh-name" {
+  type = string
+  nullable = true
+}
+
+variable "ssh-pub-key" {
+  type = string
+  nullable = true
+}

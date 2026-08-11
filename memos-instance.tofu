@@ -4,4 +4,6 @@ module "memos-instance" {
   instance-name = "memos"
   network-name = google_compute_network.vm-network.name
   startup-script-path = "${path.root}/scripts/memos-startup.sh"
+  ssh-name = var.ssh-name
+  ssh-pub-key = var.ssh-pub-key
 }
