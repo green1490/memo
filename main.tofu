@@ -4,6 +4,10 @@ terraform {
       source = "opentofu/google"
       version = "7.37.0"
     }
+    ansible = {
+      source  = "ansible/ansible"
+      version = "1.5.0"
+    }
   }
 
   backend "gcs" {
@@ -15,4 +19,8 @@ provider "google" {
   project = "memo-499618"
   region = "europe-west6"
   zone = "europe-west6-a"
+}
+
+provider "ansible" {
+
 }
