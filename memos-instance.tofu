@@ -6,4 +6,5 @@ module "memos-instance" {
   startup-script-path = "${path.root}/scripts/memos-startup.sh"
   ssh-name = var.ssh-name
   ssh-pub-key = var.ssh-pub-key
+  ip-address = var.memos-ip
 }

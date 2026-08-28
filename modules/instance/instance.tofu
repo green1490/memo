@@ -15,7 +15,9 @@ resource "google_compute_instance" "vm" {
 
   network_interface {
     network = var.network-name
-    access_config {}
+    access_config {
+      nat_ip = google_compute_address.static.address
+    }
   }
 
   dynamic "attached_disk" {

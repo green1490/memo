@@ -6,4 +6,5 @@ module "beszel-instance" {
   startup-script-path = "${path.root}/scripts/beszel-instance.sh"
   ssh-name = var.ssh-name
   ssh-pub-key = var.ssh-pub-key
+  ip-address = var.beszel-ip
 }
