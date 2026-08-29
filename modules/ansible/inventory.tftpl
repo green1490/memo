@@ -1,0 +1,4 @@
+[${inventory-group}]
+%{ for host in inventory-hosts ~}
+${host}
+%{ endfor ~}
