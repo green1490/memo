@@ -1,5 +1,42 @@
 - name: Beszel deploy
   hosts: monitoring
+  become: true
   tasks:
-    - name: Ping my host
-      ansible.builtin.ping:
+    - name: Install podman
+      community.general.zypper:
+        name: podman
+        state: present
+
+    - name: Create application folder
+      ansible.builtin.file:
+        path: /var/lib/beszel
+        state: directory
+
+    - name: Start container
+      containers.podman.podman_container:
+        name: beszel
+        ports: 8080:8090
+        image: docker.io/henrygd/beszel
+        env:
+          APP_URL: http://localhost:8090
+        volume:
+          /var/lib/beszel:/beszel_data:Z
+
+    - name: Inject own private key
+      ansible.builtin.copy:
+        content: |
+          -----BEGIN OPENSSH PRIVATE KEY-----
+          b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtz
+          c2gtZWQyNTUxOQAAACChEJwCCIpRW2yAHFen8F4cu171c1CyJkI9F59rmjsOBAAA
+          AIiorDDJqKwwyQAAAAtzc2gtZWQyNTUxOQAAACChEJwCCIpRW2yAHFen8F4cu171
+          c1CyJkI9F59rmjsOBAAAAEAqPSyfL2qpOAnUH+FvCvVSAv9eUFGpevwAegM8rd77
+          aaEQnAIIilFbbIAcV6fwXhy7XvVzULImQj0Xn2uaOw4EAAAAAAECAwQF
+          -----END OPENSSH PRIVATE KEY-----
+        dest: /var/lib/beszel/id_ed25519
+
+# curl 'http://34.65.32.251:8080/api/beszel/create-user' \
+#   -X POST \
+#   --data-raw $'{"email":"admin@example.com","password":"example!"}'
+# curl 'http://34.65.32.251:8080/api/collections/users/auth-with-password' \
+#   -X POST \
+#   --data-raw $'{"identity":"admin@example.com","password":"example!}'

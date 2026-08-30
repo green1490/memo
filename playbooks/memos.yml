@@ -1,9 +1,26 @@
-- name: Writes to file
+- name: Configure the server
   hosts: webserver
+  become: true
   tasks:
-    - name: Writes to file
-      ansible.builtin.copy:
-        content: 'success'
-        dest: /home/ansible/status.txt
-    - debug:
-        msg: 'Running'
+    - name: Install podman
+      community.general.zypper:
+        name: podman
+        state: present
+
+    - name: Formatting the persistant disk
+      ansible.builtin.shell: mkfs.ext4 /dev/disk/by-id/google-persistent-disk-1 || echo 'Cant format disk due its being mounted'
+
+    - name: Mounting the disk
+      ansible.builtin.shell: mkdir /mnt/data && mount /dev/disk/by-id/google-persistent-disk-1 /mnt/data || echo 'The disk is already mounted'
+
+    - name: Create directory and change permission
+      ansible.builtin.shell: mkdir /mnt/data/memos || echo 'The directory already exists' && chmod o+w /mnt/data/memos
+
+    - name: Start container
+      containers.podman.podman_container:
+        name: memos
+        ports: 8080:5230
+        volume: /mnt/data/memos:/var/opt/memos:Z
+        image: docker.io/neosmemo/memos:0.29
+        generate_systemd:
+          restart_policy: on-failure
