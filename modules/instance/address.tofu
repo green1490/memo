@@ -1,3 +1,3 @@
-resource "google_compute_address" "static" {
-  name = var.ip-address
+resource "google_compute_address" "nat_ip" {
+  name = var.address-name
 }

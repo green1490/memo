@@ -1,0 +1,9 @@
+- name: Writes to file
+  hosts: webserver
+  tasks:
+    - name: Writes to file
+      ansible.builtin.copy:
+        content: 'success'
+        dest: /home/ansible/status.txt
+    - debug:
+        msg: 'Running'

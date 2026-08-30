@@ -11,11 +11,14 @@ variable "network-name" {
   default = "network-name"
 }
 
-# names for google compute address
-variable "beszel-ip" {
+variable "path-to-ssh-private-key" {
   type = string
 }
 
-variable "memos-ip" {
+variable "beszel-address-name" {
+  type = string
+}
+
+variable "memos-address-name" {
   type = string
 }

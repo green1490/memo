@@ -36,6 +36,6 @@ variable "ssh-pub-key" {
   nullable = true
 }
 
-variable "ip-address" {
+variable "address-name" {
   type = string
 }
