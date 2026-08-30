@@ -3,7 +3,6 @@ module "memos-instance" {
   disk-name = "memos-disk"
   instance-name = "memos"
   network-name = google_compute_network.vm-network.name
-  startup-script-path = "${path.root}/scripts/memos-startup.sh"
   ssh-name = var.ssh-name
   ssh-pub-key = var.ssh-pub-key
   address-name = var.memos-address-name
@@ -22,7 +21,7 @@ module "memos-ansible" {
 resource "null_resource" "wait-for-memos-sshd" {
   provisioner "remote-exec" {
     connection {
-      host = module.beszel-instance.ip
+      host = module.memos-instance.ip
       user = var.ssh-name
       private_key = file(var.path-to-ssh-private-key)
     }

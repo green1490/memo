@@ -7,8 +7,6 @@ resource "google_compute_instance" "vm" {
     }
   }
 
-  metadata_startup_script = file(var.startup-script-path)
-
   metadata = {
     ssh-keys = "${ var.ssh-name }:${ var.ssh-pub-key }"
   }

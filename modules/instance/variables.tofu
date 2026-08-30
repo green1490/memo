@@ -17,10 +17,6 @@ variable "instance-name" {
   type = string
 }
 
-variable "startup-script-path" {
-  type = string
-}
-
 variable "network-name" {
   type = string
   default = "vm-network"
