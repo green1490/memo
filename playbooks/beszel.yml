@@ -34,9 +34,11 @@
           -----END OPENSSH PRIVATE KEY-----
         dest: /var/lib/beszel/id_ed25519
 
-# curl 'http://34.65.32.251:8080/api/beszel/create-user' \
-#   -X POST \
-#   --data-raw $'{"email":"admin@example.com","password":"example!"}'
-# curl 'http://34.65.32.251:8080/api/collections/users/auth-with-password' \
-#   -X POST \
-#   --data-raw $'{"identity":"admin@example.com","password":"example!}'
+    - name: Create admin user
+      ansible.builtin.uri:
+        url: http://localhost:8080/api/beszel/create-user
+        method: POST
+        body_format: json
+        body:
+          email: admin@example.com
+          password: example!
