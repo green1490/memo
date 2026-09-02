@@ -1,11 +1,22 @@
 - name: Configure the server
   hosts: webserver
   become: true
-  tasks:
+  vars:
+    host: "{{beszel_host}}"
+  pre_tasks:
     - name: Install podman
       community.general.zypper:
         name: podman
         state: present
+
+    - name: Install pip
+      community.general.zypper:
+        name: python3-pip
+        state:  present
+
+    - name: Install pocketbase package
+      ansible.builtin.pip:
+        name: pocketbase
 
     - name: Formatting the persistant disk
       ansible.builtin.shell: mkfs.ext4 /dev/disk/by-id/google-persistent-disk-1 || echo 'Cant format disk due its being mounted'
@@ -24,3 +35,23 @@
         image: docker.io/neosmemo/memos:0.29
         generate_systemd:
           restart_policy: on-failure
+
+    - name: Get universal token from hub
+      community.beszel.universal_token:
+        url: http://{{host}}:8080
+        username: admin@example.com
+        password: example!
+        state: enabled
+      register: response
+      retries: 3
+      delay: 10
+      until: response.universal_token is defined
+
+  roles:
+    - name: Install and configure agent
+      role: community.beszel.agent
+      vars:
+        agent_hub_url: http://{{host}}:8080
+        # generated from the injected private key
+        agent_public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKEQnAIIilFbbIAcV6fwXhy7XvVzULImQj0Xn2uaOw4E
+        agent_token: "{{response.universal_token['token']}}"

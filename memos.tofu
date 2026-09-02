@@ -34,7 +34,7 @@ resource "null_resource" "wait-for-memos-sshd" {
 
 resource "null_resource" "run-memos-playbook" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${path.root}/modules/ansible/inventories/webserver.ini ${path.root}/playbooks/memos.yml -u ${var.ssh-name} --private-key ${var.path-to-ssh-private-key}"
+    command = "ansible-playbook -i ${path.root}/modules/ansible/inventories/webserver.ini ${path.root}/playbooks/memos.yml -u ${var.ssh-name} --private-key ${var.path-to-ssh-private-key} --extra-vars 'beszel_host=${module.beszel-instance.ip}'"
   }
 
   depends_on = [ null_resource.wait-for-memos-sshd ]
