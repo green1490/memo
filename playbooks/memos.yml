@@ -55,3 +55,6 @@
         # generated from the injected private key
         agent_public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKEQnAIIilFbbIAcV6fwXhy7XvVzULImQj0Xn2uaOw4E
         agent_token: "{{response.universal_token['token']}}"
+        agent_extra_filesystems:
+          # monitor memos's persistent storage
+          - /dev/sdb
