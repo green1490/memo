@@ -13,4 +13,10 @@ resource "google_compute_firewall" "vm-firewall" {
     protocol = "tcp"
     ports = ["22"]
   }
+
+  // allow websocket communication
+  allow {
+    protocol = "tcp"
+    ports = ["80"]
+  }
 }
